@@ -105,7 +105,7 @@ public class HasilActivity extends AppCompatActivity {
                 txUsername.setText(SharedPreferenceUtility.getUserName(getApplicationContext()));
             }
         });
-        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Batal ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
