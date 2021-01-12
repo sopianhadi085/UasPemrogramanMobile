@@ -1,6 +1,5 @@
 package com.example.kataloglaptop;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
@@ -18,15 +17,14 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class FormLaptopActivity extends AppCompatActivity {
 
     Button btnSimpan;
-    TextInputLayout tilDeskripsi,tilNilai,tilModel;
+    TextInputLayout tilDeskripsi,tilNilai, tilModel;
     EditText edtTgl;
     Spinner spJenisTransaksi;
     Date tanggalTransaksi;
-    final String[] tipeTransaksi = {Laptop.ASUS,Laptop.ASUSROG,Laptop.ACER,Laptop.APPLE,Laptop.LENOVO,Laptop.HP};
+    final String[] tipeTransaksi = {Laptop.ASUS, Laptop.ACER,Laptop.HP, Laptop.LENOVO,Laptop.THOSIBA, Laptop.APPLE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +39,8 @@ public class FormLaptopActivity extends AppCompatActivity {
         edtTgl = findViewById(R.id.edt_tgl);
         edtTgl.setOnClickListener(view -> pickDate());
         tilDeskripsi = findViewById(R.id.til_deskripsi);
-        tilModel = findViewById(R.id.til_model);
         tilNilai = findViewById(R.id.til_nilai);
+        tilModel = findViewById(R.id.til_model);
         spJenisTransaksi = findViewById(R.id.spn_jenis);
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(
                 this,
@@ -59,9 +57,10 @@ public class FormLaptopActivity extends AppCompatActivity {
             tr.setDeskripsi(tilDeskripsi.getEditText().getText().toString());
             Double nilai = Double.parseDouble(tilNilai.getEditText().getText().toString());
             tr.setNilai(nilai);
+            tr.setModel(tilModel.getEditText().getText().toString());
             tr.setJenis(spJenisTransaksi.getSelectedItem().toString());
             tr.setTanggal(tanggalTransaksi);
-            SharedPreferenceUtility.addLaptop(this,tr);
+            SharedPreferenceUtility.addTransaksi(this,tr);
             Toast.makeText(this,"Data berhasil disimpan",Toast.LENGTH_SHORT).show();
 
             // Kembali ke layar sebelumnya setelah 500 ms (0.5 detik)

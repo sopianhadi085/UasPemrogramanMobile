@@ -9,19 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kataloglaptop">
-        <activity android:name=".listView.MainActivity"
-            android:parentActivityName=".model.HasilActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-        <activity android:name="com.example.kataloglaptop.model.HasilActivity"
-            android:parentActivityName="com.example.kataloglaptop.listView.MainActivity">
-        </activity>
         <activity android:name=".FormLaptopActivity"
-            android:parentActivityName=".model.HasilActivity">
+            android:parentActivityName=".MainActivity"
+            ></activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

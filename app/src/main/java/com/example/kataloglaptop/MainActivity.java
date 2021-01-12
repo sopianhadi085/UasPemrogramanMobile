@@ -1,4 +1,5 @@
-package com.example.kataloglaptop.model;
+package com.example.kataloglaptop;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,69 +16,52 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kataloglaptop.DaftarLaptopAdapter;
-import com.example.kataloglaptop.FormLaptopActivity;
-import com.example.kataloglaptop.GenericUtility;
-import com.example.kataloglaptop.R;
-import com.example.kataloglaptop.SharedPreferenceUtility;
+import com.example.kataloglaptop.model.Laptop;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-
-public class HasilActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     FloatingActionButton btnTambahTransaksi;
     ImageButton btnChangeUserName;
     ListView lvDaftarTransaksi;
-    TextView txNoData, txUsername, txHarga;
-    DaftarLaptopAdapter adapter;
+    TextView txNoData, txUsername, txSaldo;
+    com.example.kataloglaptop.DaftarLaptopAdafter adapter;
     List<Laptop> daftarTransaksi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hasil_activity);
+        setContentView(R.layout.activity_main);
         inisialisasiView();
         loadDataTransaksi();
         setupListview();
     }
 
     private void inisialisasiView() {
-        btnTambahTransaksi = findViewById(R.id.btn_add_laptop);
+        btnTambahTransaksi = findViewById(R.id.btn_add_transaksi);
         btnTambahTransaksi.setOnClickListener(view -> bukaFormTambahTransaksi());
         btnChangeUserName = findViewById(R.id.btn_change_username);
         btnChangeUserName.setOnClickListener(view -> changeUserName());
-        lvDaftarTransaksi = findViewById(R.id.lv_laptop);
+        lvDaftarTransaksi = findViewById(R.id.lv_transaksi);
         txNoData = findViewById(R.id.tx_nodata);
         txUsername = findViewById(R.id.tx_user_name);
         txUsername.setText(SharedPreferenceUtility.getUserName(this));
-        txHarga = findViewById(R.id.tx_harga);
+        txSaldo = findViewById(R.id.tx_saldo);
     }
 
     private void setupListview() {
-        adapter = new DaftarLaptopAdapter(this, daftarTransaksi);
+        adapter = new com.example.kataloglaptop.DaftarLaptopAdafter(this, daftarTransaksi);
         lvDaftarTransaksi.setAdapter(adapter);
     }
 
     private void loadDataTransaksi() {
-        daftarTransaksi = SharedPreferenceUtility.getAllLaptop(this);
+        daftarTransaksi = SharedPreferenceUtility.getAllTransaksi(this);
         double saldo = 0;
         if (daftarTransaksi.size()>0) {
             txNoData.setVisibility(View.GONE);
             // hitung saldo
-            for (Laptop tr:daftarTransaksi) {
-                Log.d("MAIN","TR:"+tr.toJSONObject().toString());
-                if (tr.getJenis().equals(Laptop.ASUS)) {
-                    saldo -= tr.getNilai();
-                } else {
-                    saldo += tr.getNilai();
-                }
-            }
-
-        } else {
-            txNoData.setVisibility(View.VISIBLE);
         }
-        txHarga.setText(GenericUtility.formatUang(saldo));
     }
 
     private void refreshListView() {
@@ -86,7 +71,7 @@ public class HasilActivity extends AppCompatActivity {
     }
 
     private void bukaFormTambahTransaksi() {
-        Intent intent = new Intent(this, FormLaptopActivity.class);
+        Intent intent = new Intent(this, com.example.kataloglaptop.FormLaptopActivity.class);
         startActivity(intent);
     }
 
@@ -105,7 +90,7 @@ public class HasilActivity extends AppCompatActivity {
                 txUsername.setText(SharedPreferenceUtility.getUserName(getApplicationContext()));
             }
         });
-        builder.setNegativeButton("Batall", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
@@ -114,7 +99,6 @@ public class HasilActivity extends AppCompatActivity {
         builder.show();
 
     }
-
 
     @Override
     protected void onResume() {

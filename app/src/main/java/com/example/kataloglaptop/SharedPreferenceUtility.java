@@ -14,8 +14,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-
+import java.util.TreeSet;
 
 public class SharedPreferenceUtility {
 
@@ -47,7 +46,7 @@ public class SharedPreferenceUtility {
         Ambil data transaksi dari Shared Preference
         Perhatikan bahwa data disimpan dalam format JSON String
      */
-    public static List<Laptop> getAllLaptop(Context ctx) {
+    public static List<Laptop> getAllTransaksi(Context ctx) {
         String jsonString = getSharedPref(ctx).getString(TRANS_KEY, null);
         List<Laptop> trs = new ArrayList<Laptop>();
         if (jsonString != null) {
@@ -71,7 +70,7 @@ public class SharedPreferenceUtility {
         Simpan data transaksi ke Shared Preference
         Perhatikan bahwa data disimpan dalam format JSON String
      */
-    private static void saveAllLaptop(Context ctx, List<Laptop> trs) {
+    private static void saveAllTransaksi(Context ctx, List<Laptop> trs) {
         List<JSONObject> jsonTrs = new ArrayList<JSONObject>();
         JSONArray jsonArr = new JSONArray();
         for (Laptop tr : trs) {
@@ -83,31 +82,31 @@ public class SharedPreferenceUtility {
     /*
         Tambah data transaksi baru ke Shared Preference
      */
-    public static void addLaptop(Context ctx, Laptop tr) {
-        List<Laptop> trs = getAllLaptop(ctx);
+    public static void addTransaksi(Context ctx, Laptop tr) {
+        List<Laptop> trs = getAllTransaksi(ctx);
         trs.add(tr);
-        saveAllLaptop(ctx,trs);
+        saveAllTransaksi(ctx,trs);
     }
 
-    public static void editLaptop(Context ctx, Laptop tr) {
-        List<Laptop> trs = getAllLaptop(ctx);
+    public static void editTransaksi(Context ctx, Laptop tr) {
+        List<Laptop> trs = getAllTransaksi(ctx);
         for (Laptop tre:trs) {
             if (tr.getId().equals(tre.getId())) {
                 trs.remove(tre);
                 trs.add(tr);
             }
         }
-        saveAllLaptop(ctx,trs);
+        saveAllTransaksi(ctx,trs);
     }
 
-    public static void deleteLaptop(Context ctx, String id) {
-        List<Laptop> trs = getAllLaptop(ctx);
+    public static void deleteTransaksi(Context ctx, String id) {
+        List<Laptop> trs = getAllTransaksi(ctx);
         for (Laptop tr:trs) {
             if (tr.getId().equals(id)) {
                 trs.remove(tr);
             }
         }
-        saveAllLaptop(ctx,trs);
+        saveAllTransaksi(ctx,trs);
     }
 
 }

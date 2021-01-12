@@ -12,8 +12,8 @@ import java.util.UUID;
 public class Laptop {
     public static final String ASUS="ASUS";
     public static final String ACER="ACER";
-    public static final String ASUSROG="ASUSROG";
     public static final String HP="HP";
+    public static final String THOSIBA="THOSIBA";
     public static final String LENOVO="LENOVO";
     public static final String APPLE="APPLE";
     private String id;
@@ -27,7 +27,6 @@ public class Laptop {
         this.id = UUID.randomUUID().toString();
         this.tanggal = new Date();
     }
-
 
     public String getId() {
         return id;
@@ -53,7 +52,7 @@ public class Laptop {
         this.deskripsi = deskripsi;
     }
 
-    public double getNilai() {
+    public Double getNilai() {
         return nilai;
     }
 
@@ -69,11 +68,10 @@ public class Laptop {
         this.jenis = jenis;
     }
 
-    public String getModel() {
+    public String getModel(){
         return model;
     }
-
-    public void setModel(String model) {
+    public void setModel( String model){
         this.model = model;
     }
 
@@ -85,7 +83,7 @@ public class Laptop {
             tr.setDeskripsi(obj.getString("deskripsi"));
             tr.setNilai(obj.getDouble("nilai"));
             tr.setJenis(obj.getString("jenis"));
-            tr.setJenis(obj.getString("model"));
+            tr.setModel(obj.getString("model"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -99,12 +97,11 @@ public class Laptop {
             jsonObj.put("tanggal",this.tanggal.getTime());
             jsonObj.put("jenis",this.jenis);
             jsonObj.put("nilai",this.nilai);
-            jsonObj.put("model",this.model);
             jsonObj.put("deskripsi",this.deskripsi);
+            jsonObj.put("model",this.model);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return jsonObj;
     }
 }
-
